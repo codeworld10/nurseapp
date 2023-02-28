@@ -7,24 +7,81 @@ import {
   TextInput,
   Pressable,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { useTogglePasswordVisibility } from "../Components/useTogglePasswordVisibility";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HOST } from "../Components/Host/Constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ClientLogin = ({navigation}) => {
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isVerified, setIsVerified] = useState("");
+  const [loading, setLoading] = useState(false);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
+
+    const HandleLogin = async () => {
+      setLoading(true);
+      const response = await fetch(`${HOST}/api/clientauth/clientlogin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Email, password, isVerified }),
+      });
+  
+      const json = await response.json();
+  
+      console.log(json);
+      if (json.success) {
+        await AsyncStorage.setItem("token", json.authtoken);
+        if (json.data && json.data.user) {
+          await AsyncStorage.setItem("userId", json.data.user.id);
+          await AsyncStorage.setItem("name", json.data.user.name);
+        }
+        Alert.alert("Success!", "Sign in successfully 😍😍. Welcome!", [
+          {
+            text: "Ok",
+            onPress: () => null,
+            style: "cancel",
+          },
+        ]);
+        console.log("done")
+      } else if (!Email || !password) {
+        setLoading(false);
+        Alert.alert("Error!", "Please fill in all fields", [
+          {
+            text: "Ok",
+            onPress: () => null,
+            style: "cancel",
+          },
+        ]);
+      } else {
+        setLoading(false);
+        Alert.alert("Error!", json.error, [
+          {
+            text: "Ok",
+            onPress: () => null,
+            style: "cancel",
+          },
+        ]);
+      }
+    };
+
   return (
     <View>
       <SafeAreaView>
       <View
-      style={{display:"flex", justifyContent:"space-between", backgroundColor:"white"}}
+      style={{backgroundColor:"white"}}
       >
-        <ScrollView>
+      <View style={styles.ballleft} />
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        >
           <View>
             <Text>Logo</Text>
           </View>
@@ -90,6 +147,7 @@ const ClientLogin = ({navigation}) => {
               </Pressable>
             </View>
             <Text
+            onPress={() => navigation.navigate("Forgot")}
               style={{
                 textAlign: "right",
                 paddingHorizontal: 15,
@@ -104,6 +162,7 @@ const ClientLogin = ({navigation}) => {
             style={{ paddingHorizontal: 20, marginTop: 10, }}
           >
             <TouchableOpacity
+            onPress={HandleLogin}
               style={{
                 backgroundColor: "#009571",
                 height: 45,
@@ -155,7 +214,6 @@ const ClientLogin = ({navigation}) => {
           </TouchableOpacity>
           </View>
         </ScrollView>
-        <View style={styles.ballleft} />
         </View>
       </SafeAreaView>
     </View>
@@ -212,13 +270,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   ballleft: {
-    position: 'absolute',
-    bottom: -140,
-    left: -120,
     width: 200,
-    height: 200,
-    borderRadius: 500,
-    backgroundColor: '#009571',
+      height: 200,
+      borderRadius: 500,
+      backgroundColor: '#009571',
+      marginLeft: 5,
+      position: 'absolute',
+      top: -120,
+      right: -90,
   },
 });
 

@@ -5,6 +5,11 @@ import Welcome from '../../screens/Welcome';
 import NurseLogin from '../../screens/NurseLogin';
 import ClientSignup from '../../screens/ClientSignup';
 import NurseSignup from '../../screens/NurseSignup';
+import Forgot from '../../screens/Forgot';
+import Verify from '../../screens/Verify';
+import Resetpass from '../../screens/Resetpass';
+import NurseReset from '../../screens/NurseReset';
+import ForgotNurse from '../../screens/ForgotNurse';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +21,11 @@ const Nav = () => {
     <Stack.Screen name="NurseLogin" component={NurseLogin} />
     <Stack.Screen name="ClientSignup" component={ClientSignup} />
     <Stack.Screen name="NurseSignup" component={NurseSignup} />
+    <Stack.Screen name="Forgot" component={Forgot} />
+    <Stack.Screen name="Verify" component={Verify} />
+    <Stack.Screen name="Resetpass" component={Resetpass} />
+    <Stack.Screen name="NurseReset" component={NurseReset} />
+    <Stack.Screen name="ForgotNurse" component={ForgotNurse} />
   </Stack.Navigator>
   )
 }

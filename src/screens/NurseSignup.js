@@ -8,23 +8,99 @@ import {
     Pressable,
     TouchableOpacity,
     Linking,
+    Alert,
   } from "react-native";
   import React, { useState } from "react";
   import { useTogglePasswordVisibility } from "../Components/useTogglePasswordVisibility";
-  import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+  import { MaterialCommunityIcons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
   import { SafeAreaView } from "react-native-safe-area-context";
   import BouncyCheckbox from 'react-native-bouncy-checkbox';
+  import { HOST } from "../Components/Host/Constants";
   
-  const NurseSignup = () => {
+  const NurseSignup = ({navigation}) => {
+    const [cname, setCname] = useState("");
     const [Email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [conpassword, setConPassword] = useState("");
     const [isChecked, setIsChecked] = useState(false);
+    const [loading, setLoading] = useState(false)
     const { passwordVisibility, rightIcon, handlePasswordVisibility } =
       useTogglePasswordVisibility();
 
       const handleTextPress = () => {
         Linking.openURL('https://www.maniwebdev.com');
+      };
+
+      const HandleSignup = async () => {
+        setLoading(true);
+      
+        // Check if all fields are filled
+        if (!cname || !Email || !password || !conpassword) {
+          setLoading(false);
+          Alert.alert("Error", "Please fill in all fields", [
+            {
+              text: "Ok",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+          return;
+        }
+      
+        // Check if passwords match
+        if (password !== conpassword) {
+          setLoading(false);
+          Alert.alert("Error", "Passwords do not match", [
+            {
+              text: "Ok",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+          return;
+        }
+      
+        const response = await fetch(`${HOST}/api/nurseauth/newnurse`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cname, Email, password, conpassword }),
+        });
+      
+        const json = await response.json();
+      
+        console.log(json);
+      
+        if (Email === json.Email) {
+          Alert.alert("Error!", "Sorry a user with this email already exists.", [
+            {
+              text: "Ok",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+        }
+      
+        if (json.success) {
+          Alert.alert("Success!", "Sign up successfully. Verify your email!", [
+            {
+              text: "Ok",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+          console.log("done")
+        } else {
+          setLoading(false);
+          Alert.alert("Error!", json.error, [
+            {
+              text: "Ok",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+        }
       };
 
     return (
@@ -58,15 +134,15 @@ import {
             User name*
           </Text>
             <View style={styles.LogIn2}>
-              <MaterialIcons name="email" size={24} color="#009571" />
+            <FontAwesome name="user" size={24} color="#009571" />
               <TextInput
                 style={styles.InputL1}
                 autoCapitalize="none"
                 underlineColorAndroid={"transparent"}
                 autoCorrect={false}
-                value={Email}
+                value={cname}
                 placeholder="Enter Your Name"
-                onChangeText={(actualdata) => setEmail(actualdata)}
+                onChangeText={(actualdata) => setCname(actualdata)}
               />
             </View>
             <Text
@@ -176,6 +252,7 @@ import {
               style={{ paddingHorizontal: 20, marginTop: 10, paddingBottom:40 }}
             >
               <TouchableOpacity
+              onPress={() => navigation.navigate("Verify")}
               disabled={!isChecked}
                 style={{
                   backgroundColor: !isChecked ? "grey": "#009571",
