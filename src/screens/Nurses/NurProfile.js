@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React,{useState, useEffect, useContext} from "react";
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, RefreshControl, } from "react-native";
+import React,{useState, useEffect, useCallback} from "react";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import NurMenu from "../../Components/Navigation/NurMenu";
 import { HOST } from "../../Components/Host/Constants";
@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const NurProfile = ({navigation}) => {
   const host = `${HOST}`;
   const [nurse, setNurse] = useState([]);
-
+  const [refreshing, setRefreshing] = useState(false);
 
   
   const getUser = async () => {
@@ -26,6 +26,12 @@ const NurProfile = ({navigation}) => {
     getUser();
   }, []);
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <View
     style={{
@@ -36,6 +42,9 @@ const NurProfile = ({navigation}) => {
       <ScrollView
         //style={{backgroundColor:"white"}}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getUser} />
+        }
       >
     
         <View style={styles.profile}>

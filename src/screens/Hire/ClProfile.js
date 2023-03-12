@@ -5,8 +5,9 @@ import {
   View,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import ClMenu from "../../Components/ClMenu";
 import { HOST } from "../../Components/Host/Constants";
@@ -15,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ClProfile = ({ navigation }) => {
   const host = `${HOST}`;
   const [client, setClient] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const getUser = async () => {
     const response = await fetch(`${host}/api/auth/getuser/:userId`, {
@@ -31,6 +33,12 @@ const ClProfile = ({ navigation }) => {
     getUser();
   }, []);
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <View
       style={{
@@ -41,6 +49,9 @@ const ClProfile = ({ navigation }) => {
       <ScrollView
         //style={{backgroundColor:"white"}}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getUser} />
+        }
       >
         <View style={styles.profile}>
           <View
@@ -62,19 +73,28 @@ const ClProfile = ({ navigation }) => {
           />
           <Text style={styles.name}>{client.cname}</Text>
         </View>
+
         <View style={styles.Marg}>
           <Text style={styles.Require}>Requirements</Text>
           <View style={styles.Para}>
-            <Text
-              style={{
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                color: "grey",
-              }}
-            >
-              The patient is male. Patient also have allergies. Patient need
-              insulin.
-            </Text>
+            {client.patientgender ? (
+              <Text>The patient is {client.patientgender}</Text>
+            ) : null}
+
+            {client.allergy ? (
+              <Text>Does the patient have allergy? ({client.allergy})</Text>
+            ) : null}
+            {client.incontinent ? (
+              <Text>Is the patient incontinent? ({client.incontinent})</Text>
+            ) : null}
+            {client.alone ? (
+              <Text>Does the pDatient live alone? ({client.alone})</Text>
+            ) : null}
+            {client.carelevel ? (
+              <Text>
+                What level of care is the patient? (1-5) ({client.carelevel})
+              </Text>
+            ) : null}
           </View>
           <Text style={styles.Require}>Contact</Text>
           <View style={styles.ParaContact}>
@@ -135,6 +155,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     backgroundColor: "white",
     borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
   ParaContact: {
     elevation: 20,

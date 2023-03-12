@@ -9,7 +9,7 @@ const NurMenu = () => {
   const Logout = () => {
     AsyncStorage.removeItem("token");
     navigation.navigate("Welcome");
-    console.log("You are done.")
+    //console.log("You are done.")
   }
 
   return (

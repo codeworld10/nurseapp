@@ -10,7 +10,7 @@ const navigation = useNavigation();
   const Logout = () => {
     AsyncStorage.removeItem("token");
     navigation.navigate("Welcome");
-    console.log("Client is done")
+    //console.log("Client is done")
   }
 
   return (

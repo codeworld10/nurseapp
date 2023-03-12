@@ -1,24 +1,35 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React,{useContext, useEffect, useState} from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RadioButton } from "react-native-paper";
 import profileContext from "../../../component/profileContext";
 
-const UpdateNur = ({navigation, route}) => {
-  const {UpdateNurse} = useContext(profileContext);
+const UpdateNur = ({ navigation, route }) => {
+  const { UpdateNurse } = useContext(profileContext);
   const { nurse } = route.params;
   const { _id } = nurse;
-  const [cname, setCname] = useState('');
-  const [Email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [cname, setCname] = useState("");
+  const [Email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [servegender, setServegender] = useState(nurse.servegender);
-  const [incontinentpatients, setIncontinentpatients] = useState(nurse.incontinentpatients);
+  const [incontinentpatients, setIncontinentpatients] = useState(
+    nurse.incontinentpatients
+  );
   const [dementia, setDementia] = useState(nurse.dementia);
   const [petissue, setPetissue] = useState(nurse.petissue);
   const [alonenurse, setAlonenurse] = useState(nurse.alonenurse);
   const [shopping, setShopping] = useState(nurse.shopping);
   const [carelevel, setCarelevel] = useState(nurse.carelevel);
-  const [aggressivenurses, setAggressivenurses] = useState(nurse.aggressivenurses);
+  const [aggressivenurses, setAggressivenurses] = useState(
+    nurse.aggressivenurses
+  );
   const [medication, setMedication] = useState(nurse.medication);
   const [livehouse, setLivehouse] = useState(nurse.livehouse);
   const [bedridden, setBedridden] = useState(nurse.bedridden);
@@ -31,9 +42,9 @@ const UpdateNur = ({navigation, route}) => {
   const [wheelchair, setWheelchair] = useState(nurse.wheelchair);
   const [nurselift, setClientlift] = useState(nurse.nurselift);
 
-  const HandleUpdate = () =>  {
+  const HandleUpdate = () => {
     UpdateNurse(
-      _id, 
+      _id,
       cname,
       Email,
       phone,
@@ -55,18 +66,24 @@ const UpdateNur = ({navigation, route}) => {
       rotation,
       germanlevel,
       wheelchair,
-      nurselift,
-    )
-    console.log("Update Nurse")
-    navigation.navigate("NurseProfile")
-  }
-
+      nurselift
+    );
+    Alert.alert(
+      "Updated!",
+      "Your details are updated. Pull down to refresh the details",
+      [
+        {
+          text: "Ok",
+          onPress: () => null,
+        },
+      ]
+    );
+    navigation.navigate("NurseProfile");
+  };
 
   return (
     <SafeAreaView>
-      <ScrollView
-      showsVerticalScrollIndicator={false}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             backgroundColor: "#009571",
@@ -85,8 +102,7 @@ const UpdateNur = ({navigation, route}) => {
                 fontSize: 20,
               }}
             >
-              Answer these questions so that we can find best match for
-              you.
+              Answer these questions so that we can find best match for you.
             </Text>
           </View>
           <View style={styles.Questions}>
@@ -99,7 +115,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Patienten welchen Geschlechts betreuen Sie?
+              Patienten welchen Geschlechts betreuen Sie?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setServegender(newValue)}
@@ -132,7 +148,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Betreuen sie auch inkontinente Patienten?
+              Betreuen sie auch inkontinente Patienten?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setIncontinentpatients(newValue)}
@@ -161,7 +177,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Betreuen sie auch Klienten mit Demenz?
+              Betreuen sie auch Klienten mit Demenz?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setDementia(newValue)}
@@ -190,7 +206,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Haben sie Probleme mit tieren im Haushalt?
+              Haben sie Probleme mit tieren im Haushalt?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setPetissue(newValue)}
@@ -219,7 +235,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Betreuen sie nur allein lebende Klienten?
+              Betreuen sie nur allein lebende Klienten?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setAlonenurse(newValue)}
@@ -228,7 +244,7 @@ const UpdateNur = ({navigation, route}) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                 <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -248,7 +264,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie auch die Einkäufe erledigen?
+              Würden sie auch die Einkäufe erledigen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setShopping(newValue)}
@@ -277,7 +293,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Bis zu welcher Pflegestufe möchten sie Patienten betreuen?
+              Bis zu welcher Pflegestufe möchten sie Patienten betreuen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setCarelevel(newValue)}
@@ -286,7 +302,7 @@ const UpdateNur = ({navigation, route}) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="1" />
-                   <Text>1</Text>
+                  <Text>1</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="2" />
@@ -318,7 +334,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Kommen sie auch mit aggressiven Klienten zurecht?
+              Kommen sie auch mit aggressiven Klienten zurecht?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setAggressivenurses(newValue)}
@@ -327,7 +343,7 @@ const UpdateNur = ({navigation, route}) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                 <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -347,7 +363,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Können sie dem Patienten auch Medikamente verabreichen?
+              Können sie dem Patienten auch Medikamente verabreichen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setMedication(newValue)}
@@ -376,7 +392,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Soll der Patient unbedingt in einem Haus wohnen?
+              Soll der Patient unbedingt in einem Haus wohnen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setLivehouse(newValue)}
@@ -405,7 +421,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Betreuen sie auch bettlägrige Klienten?
+              Betreuen sie auch bettlägrige Klienten?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setBedridden(newValue)}
@@ -414,7 +430,7 @@ const UpdateNur = ({navigation, route}) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                   <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -434,7 +450,8 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie auch in der Nacht aufstehen, um sich um den Klienten zu kümmern?
+              Würden sie auch in der Nacht aufstehen, um sich um den Klienten zu
+              kümmern?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setNightshifts(newValue)}
@@ -463,7 +480,8 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie sich auch um einen Patienten kümmern der Sauerstoff braucht ?
+              Würden sie sich auch um einen Patienten kümmern der Sauerstoff
+              braucht ?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setOxygen(newValue)}
@@ -492,7 +510,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie sich auch um Patienten mit Diabetes kümmern?
+              Würden sie sich auch um Patienten mit Diabetes kümmern?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setDiabetes(newValue)}
@@ -501,7 +519,7 @@ const UpdateNur = ({navigation, route}) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                   <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -521,7 +539,8 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie Insulin spritzen unter Anleitung einer diplomierten Krankenschwester?
+              Würden sie Insulin spritzen unter Anleitung einer diplomierten
+              Krankenschwester?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setInsulin(newValue)}
@@ -550,7 +569,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Wie lange soll der Turnus dauern?
+              Wie lange soll der Turnus dauern?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setRotation(newValue)}
@@ -566,17 +585,17 @@ const UpdateNur = ({navigation, route}) => {
                   <Text>2</Text>
                 </View>
                 <View style={styles.Roundbtn}>
-                <RadioButton color="#009571" value="3" />
-                <Text>3</Text>
-              </View>
-              <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="4" />
-              <Text>4</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="5" />
-              <Text>5</Text>
-            </View>
+                  <RadioButton color="#009571" value="3" />
+                  <Text>3</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="4" />
+                  <Text>4</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="5" />
+                  <Text>5</Text>
+                </View>
               </View>
             </RadioButton.Group>
           </View>
@@ -591,7 +610,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Wie gut sprechen sie Deutsch?
+              Wie gut sprechen sie Deutsch?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setGermanlevel(newValue)}
@@ -632,7 +651,7 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie auch Klienten betreuen die Rollstuhl brauchen?
+              Würden sie auch Klienten betreuen die Rollstuhl brauchen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setWheelchair(newValue)}
@@ -661,7 +680,8 @@ const UpdateNur = ({navigation, route}) => {
                 marginTop: 5,
               }}
             >
-            Würden sie auch Klienten betreuen die einen Patientenlift brauchen?
+              Würden sie auch Klienten betreuen die einen Patientenlift
+              brauchen?
             </Text>
             <RadioButton.Group
               onValueChange={(newValue) => setClientlift(newValue)}
@@ -680,33 +700,33 @@ const UpdateNur = ({navigation, route}) => {
             </RadioButton.Group>
           </View>
           <View
-          style={{ paddingHorizontal: 40, marginTop: 10, paddingBottom:40 }}
+            style={{ paddingHorizontal: 40, marginTop: 10, paddingBottom: 40 }}
           >
-          <TouchableOpacity
-          onPress={HandleUpdate}
-          style={{
-            backgroundColor: "white",
-            height: 45,
-            justifyContent: "center",
-            borderRadius: 15,
-            elevation: 20,
-            shadowColor: "#000000",
-            shadowOffset: {
-              width: 0,
-              height: 4,
-            },
-          }}
-          >
-          <Text
-          style={{
-            textAlign: "center",
-            color: "green",
-            fontWeight: "500",
-          }}
-          >
-          Submit
-          </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={HandleUpdate}
+              style={{
+                backgroundColor: "white",
+                height: 45,
+                justifyContent: "center",
+                borderRadius: 15,
+                elevation: 20,
+                shadowColor: "#000000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "green",
+                  fontWeight: "500",
+                }}
+              >
+                Submit
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

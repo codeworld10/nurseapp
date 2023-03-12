@@ -1,16 +1,23 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
 import React, { useState, useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RadioButton } from "react-native-paper";
 import profileContext from "../../../component/profileContext";
 
 const UpdateCli = ({ route, navigation }) => {
-  const {UpdateClient} = useContext(profileContext);
+  const { UpdateClient } = useContext(profileContext);
   const { client } = route.params;
   const { _id } = client;
-  const [cname, setCname] = useState('');
-  const [Email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [cname, setCname] = useState("");
+  const [Email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [patientgender, setPatientgender] = useState(client.patientgender);
   const [allergy, setAllergy] = useState(client.allergy);
   const [incontinent, setIncontinent] = useState(client.incontinent);
@@ -32,9 +39,9 @@ const UpdateCli = ({ route, navigation }) => {
   const [wheelchair, setWheelchair] = useState(client.wheelchair);
   const [patientlift, setPatientlift] = useState(client.patientlift);
 
-  const HandleUpdate = () =>  {
+  const HandleUpdate = () => {
     UpdateClient(
-      _id, 
+      _id,
       cname,
       Email,
       phone,
@@ -57,17 +64,21 @@ const UpdateCli = ({ route, navigation }) => {
       rotation,
       germanlevel,
       wheelchair,
-      patientlift,
-    )
-    console.log("Update client",UpdateClient)
-    navigation.navigate("ClientProfile")
-  }
+      patientlift
+    );
+    console.log("Update client", UpdateClient);
+    Alert.alert("Updated!", "Your details are updated. Pull down to refresh the details", [
+      {
+        text: "Ok",
+        onPress: () => null,
+      }
+    ])
+    navigation.navigate("ClientProfile");
+  };
 
   return (
     <SafeAreaView>
-      <ScrollView
-      showsVerticalScrollIndicator={false}
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             backgroundColor: "#009571",
@@ -86,8 +97,7 @@ const UpdateCli = ({ route, navigation }) => {
                 fontSize: 20,
               }}
             >
-              Answer these questions so that we can find best match for
-              you.
+              Answer these questions so that we can find best match for you.
             </Text>
           </View>
           <View style={styles.Questions}>
@@ -225,7 +235,7 @@ const UpdateCli = ({ route, navigation }) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                 <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -283,7 +293,7 @@ const UpdateCli = ({ route, navigation }) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                   <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -310,26 +320,26 @@ const UpdateCli = ({ route, navigation }) => {
               value={carelevel}
             >
               <View style={styles.Radio}>
-              <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="1" />
-               <Text>1</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="2" />
-              <Text>2</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="3" />
-              <Text>3</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="4" />
-              <Text>4</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="5" />
-              <Text>5</Text>
-            </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="1" />
+                  <Text>1</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="2" />
+                  <Text>2</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="3" />
+                  <Text>3</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="4" />
+                  <Text>4</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="5" />
+                  <Text>5</Text>
+                </View>
               </View>
             </RadioButton.Group>
           </View>
@@ -411,7 +421,7 @@ const UpdateCli = ({ route, navigation }) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                   <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -498,7 +508,7 @@ const UpdateCli = ({ route, navigation }) => {
               <View style={styles.Radio}>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Ja" />
-                   <Text>Ja</Text>
+                  <Text>Ja</Text>
                 </View>
                 <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="NEIN" />
@@ -584,26 +594,26 @@ const UpdateCli = ({ route, navigation }) => {
               value={rotation}
             >
               <View style={styles.Radio}>
-              <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="1" />
-               <Text>1</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="2" />
-              <Text>2</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="3" />
-              <Text>3</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="4" />
-              <Text>4</Text>
-            </View>
-            <View style={styles.Roundbtn}>
-              <RadioButton color="#009571" value="5" />
-              <Text>5</Text>
-            </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="1" />
+                  <Text>1</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="2" />
+                  <Text>2</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="3" />
+                  <Text>3</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="4" />
+                  <Text>4</Text>
+                </View>
+                <View style={styles.Roundbtn}>
+                  <RadioButton color="#009571" value="5" />
+                  <Text>5</Text>
+                </View>
               </View>
             </RadioButton.Group>
           </View>
@@ -633,7 +643,7 @@ const UpdateCli = ({ route, navigation }) => {
                   <RadioButton color="#009571" value="Mittel" />
                   <Text>Mittel</Text>
                 </View>
-                 <View style={styles.Roundbtn}>
+                <View style={styles.Roundbtn}>
                   <RadioButton color="#009571" value="Fließend" />
                   <Text>Fließend</Text>
                 </View>
@@ -699,33 +709,33 @@ const UpdateCli = ({ route, navigation }) => {
             </RadioButton.Group>
           </View>
           <View
-          style={{ paddingHorizontal: 40, marginTop: 10, paddingBottom:40 }}
+            style={{ paddingHorizontal: 40, marginTop: 10, paddingBottom: 40 }}
           >
-          <TouchableOpacity
-          onPress={HandleUpdate}
-          style={{
-            backgroundColor: "white",
-            height: 45,
-            justifyContent: "center",
-            borderRadius: 15,
-            elevation: 20,
-            shadowColor: "#000000",
-            shadowOffset: {
-              width: 0,
-              height: 4,
-            },
-          }}
-          >
-          <Text
-          style={{
-            textAlign: "center",
-            color: "green",
-            fontWeight: "500",
-          }}
-          >
-          Submit
-          </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={HandleUpdate}
+              style={{
+                backgroundColor: "white",
+                height: 45,
+                justifyContent: "center",
+                borderRadius: 15,
+                elevation: 20,
+                shadowColor: "#000000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "green",
+                  fontWeight: "500",
+                }}
+              >
+                Submit
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
