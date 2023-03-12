@@ -20,6 +20,7 @@ import {
   const NurseSignup = ({navigation}) => {
     const [cname, setCname] = useState("");
     const [Email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [conpassword, setConPassword] = useState("");
     const [isChecked, setIsChecked] = useState(false);
@@ -35,9 +36,9 @@ import {
         setLoading(true);
       
         // Check if all fields are filled
-        if (!cname || !Email || !password || !conpassword) {
+        if (!cname || !Email || !phone || !password || !conpassword) {
           setLoading(false);
-          Alert.alert("Error", "Please fill in all fields", [
+          Alert.alert("Error", "Bitte füllen Sie alle Eingabefelder aus.", [
             {
               text: "Ok",
               onPress: () => null,
@@ -50,7 +51,7 @@ import {
         // Check if passwords match
         if (password !== conpassword) {
           setLoading(false);
-          Alert.alert("Error", "Passwords do not match", [
+          Alert.alert("Error", "Das Passwort stimmt nicht überein.", [
             {
               text: "Ok",
               onPress: () => null,
@@ -60,12 +61,12 @@ import {
           return;
         }
       
-        const response = await fetch(`${HOST}/api/nurseauth/newnurse`, {
+        const response = await fetch(`${HOST}/api/nurse/newuser`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ cname, Email, password, conpassword }),
+          body: JSON.stringify({ cname, Email, phone, password, conpassword }),
         });
       
         const json = await response.json();
@@ -73,7 +74,7 @@ import {
         console.log(json);
       
         if (Email === json.Email) {
-          Alert.alert("Error!", "Sorry a user with this email already exists.", [
+          Alert.alert("Error!", "Es tut uns leid, ein Benutzer mit dieser E-Mail existiert bereits.", [
             {
               text: "Ok",
               onPress: () => null,
@@ -83,14 +84,19 @@ import {
         }
       
         if (json.success) {
-          Alert.alert("Success!", "Sign up successfully. Verify your email!", [
+          Alert.alert("Success!", "Registrieren Sie sich erfolgreich. Bestätigen Sie Ihre E-Mail!", [
             {
               text: "Ok",
               onPress: () => null,
               style: "cancel",
             },
           ]);
-          console.log("done")
+         navigation.navigate("Verify")
+         setCname('');
+         setEmail('');
+         setPhone('');
+         setPassword('');
+         setConPassword('');
         } else {
           setLoading(false);
           Alert.alert("Error!", json.error, [
@@ -167,6 +173,30 @@ import {
                   value={Email}
                   placeholder="Enter Your Email"
                   onChangeText={(actualdata) => setEmail(actualdata)}
+                />
+              </View>
+              <Text
+              style={{
+                fontSize: 14,
+                marginTop: 5,
+                fontWeight: "bold",
+                color: "grey",
+                marginLeft: 15,
+              }}
+            >
+              Phone*
+            </Text>
+              <View style={styles.LogIn2}>
+              <FontAwesome name="phone" size={24} color="#009571" />
+                <TextInput
+                  style={styles.InputL1}
+                  autoCapitalize="none"
+                  underlineColorAndroid={"transparent"}
+                  keyboardType="number-pad"
+                  autoCorrect={false}
+                  value={phone}
+                  placeholder="Enter Your Phone"
+                  onChangeText={(actualdata) => setPhone(actualdata)}
                 />
               </View>
               <Text
@@ -252,7 +282,7 @@ import {
               style={{ paddingHorizontal: 20, marginTop: 10, paddingBottom:40 }}
             >
               <TouchableOpacity
-              onPress={() => navigation.navigate("Verify")}
+              onPress={HandleSignup}
               disabled={!isChecked}
                 style={{
                   backgroundColor: !isChecked ? "grey": "#009571",

@@ -26,7 +26,7 @@ const ClientLogin = ({navigation}) => {
 
     const HandleLogin = async () => {
       setLoading(true);
-      const response = await fetch(`${HOST}/api/clientauth/clientlogin`, {
+      const response = await fetch(`${HOST}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,9 @@ const ClientLogin = ({navigation}) => {
             style: "cancel",
           },
         ]);
-        console.log("done")
+       navigation.navigate("ClientProfile");
+       setEmail('');
+       setPassword('');
       } else if (!Email || !password) {
         setLoading(false);
         Alert.alert("Error!", "Please fill in all fields", [
@@ -88,7 +90,7 @@ const ClientLogin = ({navigation}) => {
           <View style={styles.imgView}>
             <Image
               style={styles.cliImg}
-              source={require("../../assets/clientlogin.png")}
+              
             />
           </View>
           <Text
@@ -213,6 +215,11 @@ const ClientLogin = ({navigation}) => {
           </Text>
           </TouchableOpacity>
           </View>
+          <Text style={styles.Verify}
+          onPress={() => navigation.navigate("VerifyCli")}
+          >
+          Verify Email
+          </Text>
         </ScrollView>
         </View>
       </SafeAreaView>
@@ -278,6 +285,11 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: -120,
       right: -90,
+  },
+  Verify:{
+    textAlign:"center",
+    fontSize:14,
+    paddingBottom:20,
   },
 });
 

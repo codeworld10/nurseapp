@@ -21,7 +21,6 @@ import {
             <View style={styles.imgView}>
               <Image
                 style={styles.LoImg}
-                source={require('../../assets/wl.png')}
               />
             </View>
             <Text style={styles.weltext}>

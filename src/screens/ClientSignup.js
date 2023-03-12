@@ -20,6 +20,7 @@ import {
   const ClientSignup = ({navigation}) => {
     const [cname, setCname] = useState("");
     const [Email, setEmail] = useState("");
+     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [conpassword, setConPassword] = useState("");
     const [isChecked, setIsChecked] = useState(false);
@@ -35,7 +36,7 @@ import {
         setLoading(true);
       
         // Check if all fields are filled
-        if (!cname || !Email || !password || !conpassword) {
+        if (!cname || !Email || !phone || !password || !conpassword) {
           setLoading(false);
           Alert.alert("Error", "Please fill in all fields", [
             {
@@ -60,12 +61,12 @@ import {
           return;
         }
       
-        const response = await fetch(`${HOST}/api/clientauth/newclient`, {
+        const response = await fetch(`${HOST}/api/auth/newuser`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ cname, Email, password, conpassword }),
+          body: JSON.stringify({ cname, Email, phone, password, conpassword }),
         });
       
         const json = await response.json();
@@ -90,7 +91,12 @@ import {
               style: "cancel",
             },
           ]);
-          console.log("done")
+          navigation.navigate("VerifyCli");
+          setCname('');
+          setEmail('');
+          setPhone('');
+          setPassword('');
+          setConPassword('');
         } else {
           setLoading(false);
           Alert.alert("Error!", json.error, [
@@ -119,7 +125,7 @@ import {
             <View style={styles.imgView}>
               <Image
                 style={styles.cliImg}
-                source={require("../../assets/clientsign.png")}
+                
               />
             </View>
             <Text
@@ -169,6 +175,32 @@ import {
                   onChangeText={(actualdata) => setEmail(actualdata)}
                 />
               </View>
+
+              <Text
+              style={{
+                fontSize: 14,
+                marginTop: 5,
+                fontWeight: "bold",
+                color: "grey",
+                marginLeft: 15,
+              }}
+            >
+              Phone*
+            </Text>
+              <View style={styles.LogIn2}>
+              <FontAwesome name="phone" size={24} color="#009571" />
+                <TextInput
+                  style={styles.InputL1}
+                  autoCapitalize="none"
+                  underlineColorAndroid={"transparent"}
+                  keyboardType="number-pad"
+                  autoCorrect={false}
+                  value={phone}
+                  placeholder="Enter Your Phone"
+                  onChangeText={(actualdata) => setPhone(actualdata)}
+                />
+              </View>
+
               <Text
                 style={{
                   fontSize: 14,

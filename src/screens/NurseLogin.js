@@ -27,7 +27,7 @@ import {
 
       const HandleLogin = async () => {
         setLoading(true);
-        const response = await fetch(`${HOST}/api/nurseauth/login`, {
+        const response = await fetch(`${HOST}/api/nurse/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -44,17 +44,19 @@ import {
             await AsyncStorage.setItem("userId", json.data.user.id);
             await AsyncStorage.setItem("name", json.data.user.name);
           }
-          Alert.alert("Success!", "Sign in successfully 😍😍. Welcome!", [
+          Alert.alert("Success!", "Anmelden erfolgreich 😍😍. Willkommen!", [
             {
               text: "Ok",
               onPress: () => null,
               style: "cancel",
             },
           ]);
-          console.log("done")
+          navigation.navigate("NurseProfile");
+          setEmail('');
+          setPassword('');
         } else if (!Email || !password) {
           setLoading(false);
-          Alert.alert("Error!", "Please fill in all fields", [
+          Alert.alert("Error!", "Bitte füllen Sie alle Eingabefelder aus.", [
             {
               text: "Ok",
               onPress: () => null,
@@ -88,7 +90,7 @@ import {
             <View style={styles.imgView}>
               <Image
                 style={styles.cliImg}
-                source={require("../../assets/nurselogin.png")}
+                
               />
             </View>
             <Text
@@ -211,6 +213,11 @@ import {
             Sign Up
             </Text>
             </View>
+            <Text style={styles.Verify}
+            onPress={() => navigation.navigate("Verify")}
+            >
+            Verify Email
+            </Text>
           </ScrollView>
           </View>
         </SafeAreaView>
@@ -276,6 +283,11 @@ import {
       position: 'absolute',
       top: -120,
       right: -90,
+    },
+    Verify:{
+      textAlign:"center",
+      fontSize:14,
+      paddingBottom:20,
     },
   });
   
