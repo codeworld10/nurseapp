@@ -23,8 +23,8 @@ const Stack = createNativeStackNavigator();
 const Nav = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="ClientLogin" component={ClientLogin} />
+      <Stack.Screen options={{headerTitle:"Willkomen", headerTitleAlign:"center",}} name="Welcome" component={Welcome} />
+      <Stack.Screen options={{headerTitle:"Login für Klienten", headerTitleAlign:"center",}} name="ClientLogin" component={ClientLogin} />
       <Stack.Screen name="NurseLogin" component={NurseLogin} />
       <Stack.Screen name="ClientSignup" component={ClientSignup} />
       <Stack.Screen name="NurseSignup" component={NurseSignup} />

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  StatusBar,
 } from "react-native";
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
@@ -46,6 +47,7 @@ const ClProfile = ({ navigation }) => {
         justifyContent: "space-between",
       }}
     >
+    <StatusBar backgroundColor= "#009571" />
       <ScrollView
         //style={{backgroundColor:"white"}}
         showsVerticalScrollIndicator={false}

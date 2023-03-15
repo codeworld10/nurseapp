@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, StatusBar, } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import profileContext from "../../../component/profileContext";
 
@@ -12,6 +12,7 @@ const GetNurses = () => {
 
   return (
     <View>
+    <StatusBar backgroundColor= "#009571" />
       <View>
         <FlatList
           data={nurse}

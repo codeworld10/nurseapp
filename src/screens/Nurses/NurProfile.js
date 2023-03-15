@@ -1,16 +1,24 @@
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, RefreshControl, } from "react-native";
-import React,{useState, useEffect, useCallback} from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  RefreshControl,
+  StatusBar,
+} from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
 import { Ionicons, Feather, MaterialIcons } from "@expo/vector-icons";
 import NurMenu from "../../Components/Navigation/NurMenu";
 import { HOST } from "../../Components/Host/Constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const NurProfile = ({navigation}) => {
+const NurProfile = ({ navigation }) => {
   const host = `${HOST}`;
   const [nurse, setNurse] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  
   const getUser = async () => {
     const response = await fetch(`${host}/api/nurse/getuser/:userId`, {
       method: "GET",
@@ -34,11 +42,12 @@ const NurProfile = ({navigation}) => {
 
   return (
     <View
-    style={{
-      flex: 1,
-      justifyContent:"space-between"
-    }}
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+      }}
     >
+    <StatusBar backgroundColor= "#009571" />
       <ScrollView
         //style={{backgroundColor:"white"}}
         showsVerticalScrollIndicator={false}
@@ -46,16 +55,20 @@ const NurProfile = ({navigation}) => {
           <RefreshControl refreshing={refreshing} onRefresh={getUser} />
         }
       >
-    
         <View style={styles.profile}>
-        <View style={{alignSelf:"flex-end", paddingHorizontal:20, marginVertical:10,}}>
-        <TouchableOpacity
-        onPress={() => navigation.navigate("UpdateNurse", {nurse})}
-        >
-        <Ionicons
-        name="settings" size={24} color="white" />
-        </TouchableOpacity>
-        </View>
+          <View
+            style={{
+              alignSelf: "flex-end",
+              paddingHorizontal: 20,
+              marginVertical: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate("UpdateNurse", { nurse })}
+            >
+              <Ionicons name="settings" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
           <Image
             style={styles.Img}
             source={require("../../../assets/usm.png")}
@@ -65,28 +78,34 @@ const NurProfile = ({navigation}) => {
         <View style={styles.Marg}>
           <Text style={styles.Require}>Requirements</Text>
           <View style={styles.Para}>
-            <Text style={{ paddingHorizontal: 10, paddingVertical:10, color:"grey", }}>
+            <Text
+              style={{
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+                color: "grey",
+              }}
+            >
               Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text
               Dummy Text Dummy Text Dummy Text Dummy Text
             </Text>
           </View>
           <Text style={styles.Require}>Contact</Text>
           <View style={styles.ParaContact}>
-          <View style={styles.contact}>
-          <Feather name="phone-call" size={24} color="green" />
-         <Text style={styles.ContactText}>{nurse.phone}</Text>
+            <View style={styles.contact}>
+              <Feather name="phone-call" size={24} color="green" />
+              <Text style={styles.ContactText}>{nurse.phone}</Text>
+            </View>
+            <View style={styles.contact}>
+              <MaterialIcons name="email" size={24} color="green" />
+              <Text style={styles.ContactText}>{nurse.Email}</Text>
+            </View>
           </View>
-          <View style={styles.contact}>
-          <MaterialIcons name="email" size={24} color="green" />
-          <Text style={styles.ContactText}>{nurse.Email}</Text>
-          </View>
-        </View>
         </View>
       </ScrollView>
       <View>
-     <NurMenu />
+        <NurMenu />
       </View>
-      </View>
+    </View>
   );
 };
 
@@ -138,18 +157,18 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     backgroundColor: "white",
     borderRadius: 10,
-    marginBottom:20,
+    marginBottom: 20,
   },
-  contact:{
-    display:"flex",
-    flexDirection:"row",
-    alignItems:"center",
- paddingHorizontal:10,
- paddingVertical:10,
+  contact: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
-  ContactText:{
-    paddingHorizontal:4,
-    color:"grey",
+  ContactText: {
+    paddingHorizontal: 4,
+    color: "grey",
   },
 });
 
