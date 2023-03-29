@@ -10,10 +10,6 @@ import Verify from '../../screens/Verify';
 import Resetpass from '../../screens/Resetpass';
 import NurseReset from '../../screens/NurseReset';
 import ForgotNurse from '../../screens/ForgotNurse';
-import ClProfile from '../../screens/Hire/ClProfile';
-import NurProfile from '../../screens/Nurses/NurProfile';
-import UpdateCli from '../../screens/Hire/UpdateCli';
-import UpdateNur from '../../screens/Nurses/UpdateNur';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,16 +26,6 @@ const Nav = () => {
     <Stack.Screen name="Resetpass" component={Resetpass} />
     <Stack.Screen name="NurseReset" component={NurseReset} />
     <Stack.Screen name="ForgotNurse" component={ForgotNurse} />
-    <Stack.Screen name="ClientProfile" component={ClProfile}
-    options={{headerShown:false}}
-    />
-    <Stack.Screen name="NurseProfile" component={NurProfile}
-    options={{headerShown:false}}
-    />
-    <Stack.Screen name="UpdateClient" component={UpdateCli}
-    />
-    <Stack.Screen name="UpdateNurse" component={UpdateNur}
-    />
   </Stack.Navigator>
   )
 }

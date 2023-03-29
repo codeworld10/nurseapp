@@ -45,7 +45,7 @@ const NurseReset = ({ navigation }) => {
   const Resetsubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${HOST}/api/nurseauth/resetpasnurse`, {
+      const response = await fetch(`${HOST}/api/nurse/resetpas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

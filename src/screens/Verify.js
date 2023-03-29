@@ -37,7 +37,7 @@ const Verify = ({navigation}) => {
   const handleVerifyOtp = async () => {
     try {
       // Call the API to verify the OTP
-      const response = await fetch(`${HOST}/api/nurseauth/nurse-verify-otp`, {
+      const response = await fetch(`${HOST}/api/nurse/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const Verify = ({navigation}) => {
       const json = await response.json();
       
       if (json.success) {
-        Alert.alert("Success!", "Email is Verified. Login!", [
+        Alert.alert("Success!", "Herzlichen Glückwunsch, Ihre E-Mail wurde erfolgreich bestätigt.", [
           {
             text: "Ok",
             onPress: () => null,

@@ -37,7 +37,7 @@ const Verifycli = ({navigation}) => {
     const handleVerifyOtp = async () => {
     try {
       // Call the API to verify the OTP
-      const response = await fetch(`${HOST}/api/clientauth/client-verify-otp`, {
+      const response = await fetch(`${HOST}/api/auth/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

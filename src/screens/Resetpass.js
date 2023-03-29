@@ -45,7 +45,7 @@ const Resetpass = ({ navigation }) => {
   const Resetsubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${HOST}/api/clientauth/resetpasclient`, {
+      const response = await fetch(`${HOST}/api/auth/resetpas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
