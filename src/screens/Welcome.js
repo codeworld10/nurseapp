@@ -17,6 +17,14 @@ import {
             <View>
               <Text>Logo</Text>
             </View>
+            <View>
+            <Text style={{fontSize:25}} onPress = {() => navigation.navigate("ClientProfile")}>
+            ClientProfile
+            </Text>
+            <Text  style={{fontSize:25}}  onPress={() => navigation.navigate("NurseProfile")}>
+            Nurse profile
+            </Text>
+            </View>
             <View style={styles.ball} />
             <View style={styles.imgView}>
               <Image

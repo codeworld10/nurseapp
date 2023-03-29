@@ -90,7 +90,7 @@ import {
               style: "cancel",
             },
           ]);
-          console.log("done")
+         navigation.navigate("Verify")
         } else {
           setLoading(false);
           Alert.alert("Error!", json.error, [
@@ -252,7 +252,7 @@ import {
               style={{ paddingHorizontal: 20, marginTop: 10, paddingBottom:40 }}
             >
               <TouchableOpacity
-              onPress={() => navigation.navigate("Verify")}
+              onPress={HandleSignup}
               disabled={!isChecked}
                 style={{
                   backgroundColor: !isChecked ? "grey": "#009571",

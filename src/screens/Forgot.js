@@ -1,10 +1,67 @@
-import { ScrollView, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert } from "react-native";
 import React,{useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
+import { HOST } from "../Components/Host/Constants";
 
 const Forgot = ({navigation}) => {
     const [Email, setEmail] = useState('');
+    const [loading, setLoading] = useState('');
+
+    const Forgotsubmit = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+         
+          `${HOST}/api/clientauth/forgotclient`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ Email }),
+          }
+        );
+  
+        const json = await response.json();
+  
+        console.log(json);
+        if (json.error) {
+          setLoading(false);
+          Alert.alert("Error", json.error, [
+            {
+              text: "OK",
+              onPress: () => null,
+              style: "cancel",
+            },
+          ]);
+        } else {
+          if (json.success) {
+            setLoading(false);
+            Alert.alert("Success!", "Check your email for a password reset OTP", [
+              {
+                text: "Ok",
+                onPress: () => null,
+                style: "cancel",
+              },
+            ]);
+            navigation.navigate("NurseReset");
+            console.log("done");
+          } else if (!Email) {
+            Alert.alert("Error!", "Geben sie eine gültige E-Mail-Adresse an.", [
+              {
+                text: "Ok",
+                onPress: () => null,
+                style: "cancel",
+              },
+            ]);
+          }
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
   return (
     <View>
       <SafeAreaView>

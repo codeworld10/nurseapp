@@ -50,7 +50,7 @@ const ClientLogin = ({navigation}) => {
             style: "cancel",
           },
         ]);
-        console.log("done")
+       navigation.navigate("ClientProfile")
       } else if (!Email || !password) {
         setLoading(false);
         Alert.alert("Error!", "Please fill in all fields", [
